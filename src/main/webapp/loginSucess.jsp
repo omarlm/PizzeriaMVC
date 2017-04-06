@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,15 +20,17 @@
             <ul class="nav-bar">
                 <li><a href="/loginSucess.jsp"><i class="icono-home"></i>Home</a></li>
                 <li><a href=""><i class="icono-cross"></i>Log out</a></li>
+                <li style="text-align: right">Username: <c:out value="${sessionScope.PRINCIPAL}" /></li>
+
             </ul>
         </nav>
-            <div id="login">
-                <div class="form">
-                    <form action="pizzaSelector" method="post">
-                        
-                        <input type="submit" value="Search Pizzas" />
-                    </form>
-                </div>
+        <div id="login">
+            <div class="form">
+                <form action="pizzaSelector" method="post">
+
+                    <input type="submit" value="Search Pizzas" />
+                </form>
             </div>
+        </div>
     </body>
 </html>
