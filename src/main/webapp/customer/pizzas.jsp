@@ -20,6 +20,7 @@
             <ul class="nav-bar">
                 <li><a href="#"><i class="icono-home"></i>Home</a></li>
                 <li><a href=""><i class="icono-cross"></i>Log out</a></li>
+                <li style="text-align: right">Username: <c:out value="${sessionScope.PRINCIPAL}" /></li>
             </ul>
         </nav>
         <div class="container">
@@ -29,12 +30,10 @@
                     <h1>Oferta: ${item.nombre}</h1>
                     <p>Precio: ${item.precioTotal}€</p>
                     <p><img src="${item.urlImagen}" /></p>
-
                     <div id="login">
                         <div class="form">
                             <form action="shoppingCart" method="post">
-
-                                <input type="submit" value="Pedir" />
+                                <input  name=${item.idOfertas}  type="submit" value="Pedir" />
                             </form>
                         </div>
                     </div>

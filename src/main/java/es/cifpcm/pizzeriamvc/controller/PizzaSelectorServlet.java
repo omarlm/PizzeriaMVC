@@ -52,13 +52,14 @@ public class PizzaSelectorServlet extends HttpServlet {
 
     private List<OferPizzas> getListPizzas() {
         List<OferPizzas> listPizzas = new ArrayList<>();
-        final String query = "SELECT idOferta, nombre, precioTotal,  urlImagen  FROM Ofertas";
+        final String query = "SELECT  idOfertas, nombre, precioTotal,  urlImagen  FROM Ofertas";
         try (Connection conn = DriverManager.getConnection(dbCfg.getDatabaseUrl(),
                 dbCfg.getDatabaseUser(), dbCfg.getDatabasePassword());
                 PreparedStatement pstmt = conn.prepareStatement(query)) {
             try (ResultSet rs = pstmt.executeQuery(query)) {
                 while (rs.next()) {
                     OferPizzas op = new OferPizzas();
+                    op.setIdOfertas(rs.getInt("idOfertas"));
                     op.setNombre(rs.getString("nombre"));
                     op.setPrecioTotal(Double.parseDouble(rs.getString("precioTotal")));
                     op.setUrlImagen(rs.getString("urlImagen"));
