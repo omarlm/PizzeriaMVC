@@ -24,8 +24,8 @@
         </nav>
         <div class="container">
             <h1>Hola</h1>
-            <c:forEach var="pizzas" items="${PIZZAS}">
-                <c:out value="${pizzas.nombre}" />
+            <c:forEach var="items" items="${listPizzas}">
+                <c:out value="${items.nombre}" />
             </c:forEach>
         </div>
     </div>

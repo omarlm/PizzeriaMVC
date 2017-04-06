@@ -25,7 +25,7 @@
                 <div class="form">
                     <form action="pizzaSelector" method="post">
                         
-                        <input type="submit" name="pizzas" value="Search Pizzas" />
+                        <input type="submit" value="Search Pizzas" />
                     </form>
                 </div>
             </div>

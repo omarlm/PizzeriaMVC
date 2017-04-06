@@ -49,35 +49,23 @@ public class PizzaSelectorServlet extends HttpServlet {
         }
     }
 
-    private ListPizzas getListPizzas(String strNombre, Double dbPrecioTotal, String strUrlImage) {
-        final String query = "SELECT nombre, precioTotal, urlImagen  FROM Ofertas";
+    private ListPizzas getListPizzas() {
+        final String query = "SELECT nombre, urlImagen  FROM Ofertas";
         ListPizzas listPizzas = null;
-        LOG.debug("getListPizzas strNombre={} precioTotal={} strUrlImage", strNombre, dbPrecioTotal, strUrlImage);
-
         try (Connection conn = DriverManager.getConnection(dbCfg.getDatabaseUrl(),
                 dbCfg.getDatabaseUser(), dbCfg.getDatabasePassword());
                 PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, strNombre);
-            pstmt.setDouble(2, dbPrecioTotal);
-            pstmt.setString(3, strUrlImage);
+            try (ResultSet rs = pstmt.executeQuery(query)) {
+                
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                ArrayList<ListPizzas> lp;
-                lp = new ArrayList<>();
                 while (rs.next()) {
-                    ListPizzas p = new ListPizzas();
-                    p.setNombre(rs.getString("nombre"));
-                    p.setPrecioTotal(Double.parseDouble(rs.getString("precioTotal")));
-                    p.setUrlImagen(rs.getString("urlImagen"));
-
-                    lp.add(p);
+                    listPizzas = new ListPizzas(rs.getInt(0), rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getString(4));
                 }
             }
 
         } catch (SQLException ex) {
             LOG.error("getListPizzas", ex);
         }
-
         return listPizzas;
     }
 
@@ -113,13 +101,15 @@ public class PizzaSelectorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //ListPizzas listPizzas = getListPizzas('PEpe',2.5,'jaja');
-        //request.setAttribute("PIZZAS");
-        String nextPage = "/customer/pizzas.jsp";
+        ListPizzas listPizzas = getListPizzas();
 
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextPage);
-        dispatcher.forward(request, response);
+        ServletContext servletCtx = getServletContext();
+        if (listPizzas != null) {
+            request.setAttribute("listPizzas", listPizzas);
+            servletCtx.getRequestDispatcher("/customer/pizzas.jsp").forward(request, response);
+        } else {
+            servletCtx.getRequestDispatcher("/error.jsp").forward(request, response);
+        }
     }
 
     @Override
