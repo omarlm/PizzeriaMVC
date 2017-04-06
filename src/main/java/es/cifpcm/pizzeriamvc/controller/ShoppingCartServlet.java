@@ -3,45 +3,45 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.cifpcm.pizzeriamvc.model;
+package es.cifpcm.pizzeriamvc.controller;
 
+import es.cifpcm.pizzeriamvc.controller.data.DatabaseConfig;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ResourceBundle;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author omarl
  */
 public class ShoppingCartServlet extends HttpServlet {
+    private final DatabaseConfig dbCfg = new DatabaseConfig();
+    private final static Logger LOG = LoggerFactory.getLogger(AuthControllerServlet.class);
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    @Override
+    public void init() throws ServletException {
+        try {
+            super.init(); //To change body of generated methods, choose Tools | Templates.
+            ResourceBundle rb = ResourceBundle.getBundle("pizzas");
+            dbCfg.setDriverClassName(rb.getString("database.driver"));
+            dbCfg.setDatabaseUrl(rb.getString("database.url"));
+            dbCfg.setDatabaseUser(rb.getString("database.user"));
+            dbCfg.setDatabasePassword(rb.getString("database.password"));
+
+            Class.forName(dbCfg.getDriverClassName());
+        } catch (ClassNotFoundException ex) {
+            LOG.error("Error con la base de datos: ", ex);
+        }
+    }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ShoppingCartServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ShoppingCartServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +56,7 @@ public class ShoppingCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**
@@ -70,7 +70,7 @@ public class ShoppingCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**
