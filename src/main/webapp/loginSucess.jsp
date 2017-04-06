@@ -20,7 +20,6 @@
                 <li><a href=""><i class="icono-cross"></i>Log out</a></li>
             </ul>
         </nav>
-        <div class="container">
             <div id="login">
                 <div class="form">
                     <form action="pizzaSelector" method="post">
@@ -29,6 +28,5 @@
                     </form>
                 </div>
             </div>
-        </div>
     </body>
 </html>

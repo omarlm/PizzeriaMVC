@@ -9,17 +9,17 @@ package es.cifpcm.pizzeriamvc.model;
  *
  * @author omarl
  */
-public class ListPizzas {
+public class OferPizzas {
     private int idOfertas;
     private String nombre;
     private String descripcion;
     private Double precioTotal;
     private String urlImagen;
 
-    public ListPizzas() {
+    public OferPizzas() {
     }
 
-    public ListPizzas(int idOfertas, String nombre, String descripcion, Double precioTotal, String urlImagen) {
+    public OferPizzas(int idOfertas, String nombre, String descripcion, Double precioTotal, String urlImagen) {
         this.idOfertas = idOfertas;
         this.nombre = nombre;
         this.descripcion = descripcion;

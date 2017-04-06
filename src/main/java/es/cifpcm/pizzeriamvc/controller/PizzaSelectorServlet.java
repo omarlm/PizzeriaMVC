@@ -6,7 +6,7 @@
 package es.cifpcm.pizzeriamvc.controller;
 
 import es.cifpcm.pizzeriamvc.controller.data.DatabaseConfig;
-import es.cifpcm.pizzeriamvc.model.ListPizzas;
+import es.cifpcm.pizzeriamvc.model.OferPizzas;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -49,17 +50,20 @@ public class PizzaSelectorServlet extends HttpServlet {
         }
     }
 
-    private ListPizzas getListPizzas() {
-        final String query = "SELECT nombre, urlImagen  FROM Ofertas";
-        ListPizzas listPizzas = null;
+    private List<OferPizzas> getListPizzas() {
+        List<OferPizzas> listPizzas = new ArrayList<>();
+        final String query = "SELECT idOferta, nombre, precioTotal,  urlImagen  FROM Ofertas";
         try (Connection conn = DriverManager.getConnection(dbCfg.getDatabaseUrl(),
                 dbCfg.getDatabaseUser(), dbCfg.getDatabasePassword());
                 PreparedStatement pstmt = conn.prepareStatement(query)) {
             try (ResultSet rs = pstmt.executeQuery(query)) {
-                
-
                 while (rs.next()) {
-                    listPizzas = new ListPizzas(rs.getInt(0), rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getString(4));
+                    OferPizzas op = new OferPizzas();
+                    op.setNombre(rs.getString("nombre"));
+                    op.setPrecioTotal(Double.parseDouble(rs.getString("precioTotal")));
+                    op.setUrlImagen(rs.getString("urlImagen"));
+
+                    listPizzas.add(op);
                 }
             }
 
@@ -101,7 +105,7 @@ public class PizzaSelectorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ListPizzas listPizzas = getListPizzas();
+        List<OferPizzas> listPizzas = getListPizzas();
 
         ServletContext servletCtx = getServletContext();
         if (listPizzas != null) {

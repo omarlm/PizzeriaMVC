@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://icono-49d6.kxcdn.com/icono.min.css">
-        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="./css/style.css">
         <title>Lista - Inicio</title>
     </head>
     <body>
@@ -23,11 +23,23 @@
             </ul>
         </nav>
         <div class="container">
-            <h1>Hola</h1>
-            <c:forEach var="items" items="${listPizzas}">
-                <c:out value="${items.nombre}" />
+            <h1 class="title">Las Destacas</h1>
+            <c:forEach var="item" items="${listPizzas}">
+                <div class="wrap">
+                    <h1>Oferta: ${item.nombre}</h1>
+                    <p>Precio: ${item.precioTotal}€</p>
+                    <p><img src="${item.urlImagen}" /></p>
+
+                    <div id="login">
+                        <div class="form">
+                            <form action="shoppingCart" method="post">
+
+                                <input type="submit" value="Pedir" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </c:forEach>
         </div>
-    </div>
-</body>
+    </body>
 </html>
