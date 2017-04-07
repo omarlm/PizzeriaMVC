@@ -10,7 +10,7 @@
     </servlet>
     <servlet>
         <servlet-name>ShoppingCartServlet</servlet-name>
-        <servlet-class>es.cifpcm.pizzeriamvc.model.ShoppingCartServlet</servlet-class>
+        <servlet-class>es.cifpcm.pizzeriamvc.controller.ShoppingCartServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthControllerServlet</servlet-name>

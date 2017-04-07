@@ -6,12 +6,24 @@
 package es.cifpcm.pizzeriamvc.controller;
 
 import es.cifpcm.pizzeriamvc.controller.data.DatabaseConfig;
+import es.cifpcm.pizzeriamvc.model.OfertaOrder;
+import es.cifpcm.pizzeriamvc.model.ShoppingCart;
+import es.cifpcm.pizzeriamvc.model.UserPrincipal;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author omarl
  */
 public class ShoppingCartServlet extends HttpServlet {
+
     private final DatabaseConfig dbCfg = new DatabaseConfig();
     private final static Logger LOG = LoggerFactory.getLogger(AuthControllerServlet.class);
 
@@ -38,10 +51,22 @@ public class ShoppingCartServlet extends HttpServlet {
             LOG.error("Error con la base de datos: ", ex);
         }
     }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ShoppingCartServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ShoppingCartServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +81,7 @@ public class ShoppingCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**
@@ -70,7 +95,48 @@ public class ShoppingCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
+        UserPrincipal up;
+        HttpSession session = request.getSession();
+
+        if (session != null) {
+            up = (UserPrincipal) session.getAttribute("PRINCIPAL");
+            LOG.debug("PRINCIPAL ENCONTRADO");
+
+            HttpSession sessionCart = request.getSession();
+            ShoppingCart shoppingCart;
+            shoppingCart = (ShoppingCart) sessionCart.getAttribute("SHOPPING_CART");
+            if (shoppingCart == null) {
+                final String query = "SELECT CONCAT(nombre,' ', apellidos) AS nombreCompleto FROM Clientes WHERE idCliente=" + up.getIdCliente();
+                //LOG.debug("Va bien");
+                try (Connection conn = DriverManager.getConnection(dbCfg.getDatabaseUrl(),
+                        dbCfg.getDatabaseUser(), dbCfg.getDatabasePassword());
+                        PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+                    try (ResultSet rs = pstmt.executeQuery()) {
+                        if (rs.next()) {
+                            shoppingCart = new ShoppingCart();
+                            shoppingCart.setNombreCompleto(rs.getString("nombreCompleto"));
+                        }
+                        sessionCart.setAttribute("SHOPPING_CART", shoppingCart);
+                    }
+                } catch (SQLException ex) {
+                    java.util.logging.Logger.getLogger(ShoppingCartServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            int idPedido = Integer.parseInt(request.getParameter("idPedido"));
+            
+            OfertaOrder ofertaOrder = shoppingCart.getCartItems().get(idPedido); //WARNING SI RECIBE NULL REVIENTA.
+            
+            if(ofertaOrder != null){
+                ofertaOrder.setCantidad(ofertaOrder.getCantidad() + 1);
+            }else{
+                OfertaOrder nuevaOferta = new OfertaOrder(idPedido, up.getIdCliente(), 0);
+            }
+        }else{
+             ServletContext servletCtx = getServletContext();
+             servletCtx.getRequestDispatcher("/error.jsp").forward(request, response);
+        }
     }
 
     /**

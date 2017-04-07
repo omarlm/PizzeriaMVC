@@ -30,10 +30,11 @@
                     <h1>Oferta: ${item.nombre}</h1>
                     <p>Precio: ${item.precioTotal}€</p>
                     <p><img src="${item.urlImagen}" /></p>
+                    <p>Cantidad: <input type="number"></p>
                     <div id="login">
                         <div class="form">
                             <form action="shoppingCart" method="post">
-                                <input  name=${item.idOfertas}  type="submit" value="Pedir" />
+                                <input  id="${item.idOfertas}" name="idPedido" type="submit" value="Pedir" />
                             </form>
                         </div>
                     </div>

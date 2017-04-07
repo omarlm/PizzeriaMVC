@@ -13,14 +13,14 @@ import java.util.HashMap;
  */
 public class ShoppingCart {
     private String nombreCompleto;
-    private HashMap<Integer, Object> cartItems;
+    private HashMap<Integer, OfertaOrder> cartItems;
     private String items;
     private Double precioTotal;
 
     public ShoppingCart() {
     }
 
-    public ShoppingCart(String nombreCompleto, HashMap<Integer, Object> cartItems, String items, Double precioTotal) {
+    public ShoppingCart(String nombreCompleto, HashMap<Integer, OfertaOrder> cartItems, String items, Double precioTotal) {
         this.nombreCompleto = nombreCompleto;
         this.cartItems = cartItems;
         this.items = items;
@@ -35,11 +35,11 @@ public class ShoppingCart {
         this.nombreCompleto = nombreCompleto;
     }
 
-    public HashMap<Integer, Object> getCartItems() {
+    public HashMap<Integer, OfertaOrder> getCartItems() {
         return cartItems;
     }
 
-    public void setCartItems(HashMap<Integer, Object> cartItems) {
+    public void setCartItems(HashMap<Integer, OfertaOrder> cartItems) {
         this.cartItems = cartItems;
     }
 
@@ -58,5 +58,5 @@ public class ShoppingCart {
     public void setPrecioTotal(Double precioTotal) {
         this.precioTotal = precioTotal;
     }
-    
+
 }

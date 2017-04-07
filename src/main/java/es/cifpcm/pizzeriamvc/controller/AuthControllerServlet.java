@@ -66,13 +66,14 @@ public class AuthControllerServlet extends HttpServlet {
 
             pstmt.setString(1, strLogin);
             pstmt.setString(2, strPassword);
-
+            
             try (ResultSet rs = pstmt.executeQuery()) {
 
                 if (rs.next()) {
                     LOG.debug("Usuario encontrado {}", strLogin);
                     userPrincipal = new UserPrincipal();
                     userPrincipal.setLogin(rs.getString("login"));
+                    userPrincipal.setIdCliente(rs.getInt("idCliente"));
                 }
             }
         } catch (SQLException ex) {
