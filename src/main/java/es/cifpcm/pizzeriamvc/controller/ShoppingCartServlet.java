@@ -135,7 +135,7 @@ public class ShoppingCartServlet extends HttpServlet {
             }
         }else{
              ServletContext servletCtx = getServletContext();
-             servletCtx.getRequestDispatcher("/error.jsp").forward(request, response);
+             servletCtx.getRequestDispatcher("/error.jsp").forward(request, response); 
         }
     }
 
