@@ -54,19 +54,7 @@ public class ShoppingCartServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ShoppingCartServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ShoppingCartServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -81,7 +69,8 @@ public class ShoppingCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("/pizzas.jsp");
+
     }
 
     /**
@@ -97,6 +86,7 @@ public class ShoppingCartServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         UserPrincipal up;
+        ServletContext servletCtx = getServletContext();
         HttpSession session = request.getSession();
 
         if (session != null) {
@@ -125,17 +115,25 @@ public class ShoppingCartServlet extends HttpServlet {
                 }
             }
             int idPedido = Integer.parseInt(request.getParameter("idPedido"));
-            
-            OfertaOrder ofertaOrder = shoppingCart.getCartItems().get(idPedido); //WARNING SI RECIBE NULL REVIENTA.
-            
-            if(ofertaOrder != null){
+
+            OfertaOrder ofertaOrder = shoppingCart.getCartItems().get(idPedido);
+            // shoppingCart.setItems();
+
+            if (ofertaOrder != null) {
                 ofertaOrder.setCantidad(ofertaOrder.getCantidad() + 1);
-            }else{
-                OfertaOrder nuevaOferta = new OfertaOrder(idPedido, up.getIdCliente(), 0);
+                servletCtx.getRequestDispatcher("/customer/pizzas.jsp").forward(request, response);
+                //response.sendRedirect("./customer/pizzas.jsp");
+
+            } else {
+                OfertaOrder nuevaOferta = new OfertaOrder(idPedido, up.getIdCliente(), 1);
+                shoppingCart.putOferta(idPedido, nuevaOferta);
+                servletCtx.getRequestDispatcher("/customer/pizzas.jsp").forward(request, response);
+                //response.sendRedirect("./customer/pizzas.jsp");
+
             }
-        }else{
-             ServletContext servletCtx = getServletContext();
-             servletCtx.getRequestDispatcher("/error.jsp").forward(request, response); 
+            shoppingCart.updateSize();
+        } else {
+            servletCtx.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 

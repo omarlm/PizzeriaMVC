@@ -18,10 +18,10 @@
     <body>
         <nav id="main-menu">
             <ul class="nav-bar">
-                <li><a href="/loginSucess.jsp"><i class="icono-home"></i>Home</a></li>
+                <li><a href="${pageContext.request.contextPath}/loginSucess.jsp"><i class="icono-home"></i>Home</a></li>
                 <li><a href=""><i class="icono-cross"></i>Log out</a></li>
-                <li style="text-align: right">Username: <c:out value="${sessionScope.PRINCIPAL}" /></li>
-
+                <li><a href="${pageContext.request.contextPath}/insertOfer.jsp"><i class="icono-plusCircle"></i>Insert Orfer</a></li>
+                <li style="text-align: right"><i class="icono-user"></i><c:out value="${PRINCIPAL.login}" /></li>
             </ul>
         </nav>
         <div id="login">

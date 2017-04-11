@@ -12,17 +12,19 @@ import java.util.HashMap;
  * @author omarl
  */
 public class ShoppingCart {
+
     private String nombreCompleto;
     private HashMap<Integer, OfertaOrder> cartItems;
-    private String items;
+    private int items;
     private Double precioTotal;
 
     public ShoppingCart() {
+        this.cartItems = new HashMap<>();
     }
 
-    public ShoppingCart(String nombreCompleto, HashMap<Integer, OfertaOrder> cartItems, String items, Double precioTotal) {
+    public ShoppingCart(String nombreCompleto, HashMap<Integer, OfertaOrder> cartItems, int items, Double precioTotal) {
         this.nombreCompleto = nombreCompleto;
-        this.cartItems = cartItems;
+        this.cartItems = new HashMap<>();
         this.items = items;
         this.precioTotal = precioTotal;
     }
@@ -42,12 +44,20 @@ public class ShoppingCart {
     public void setCartItems(HashMap<Integer, OfertaOrder> cartItems) {
         this.cartItems = cartItems;
     }
+    
+    public void putOferta(int idPedido, OfertaOrder o){
+        this.cartItems.put(idPedido, o);
+    }
 
-    public String getItems() {
+    public int getItems() {
         return items;
     }
 
-    public void setItems(String items) {
+    public void updateSize() {
+        this.items = cartItems.size();
+    }
+
+    public void setItems(int items) {
         this.items = items;
     }
 
