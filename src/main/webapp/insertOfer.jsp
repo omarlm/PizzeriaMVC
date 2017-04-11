@@ -4,6 +4,7 @@
     Author     : omarl
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,19 +24,21 @@
             </ul>
         </nav>
         <div class="register">
-            <form action="" method="post">
+            <form action="insertPizzas" method="post">
                 <label for="inputName">Nombre</label>
                 <input type="text" id="inputName" name="pizzaName" required="required" />
                 <label for="selBase">Tipo de base</label>
                 <select id="selBase" name="selBase">
-                    <!--Hacer foreach de para sacar la base de la base de datos -->
+                    <option value="EXTRAQ">Extra Queso</option>
+                    <option value="3PISOS">3 pisos</option>
+                    <option value="EXTRAC">Extra Carne</option>
                 </select>
                 <br />
                 <label>Ingredientes</label>
                 <input id="chkIngredient1" type="checkbox" value="1" name="ingredients"/> Mozzarella
                 <input id="chkIngredient2" type="checkbox" value="2" name="ingredients"/> Champiñones
                 <input id="chkIngredient3" type="checkbox" value="3" name="ingredients"/> Bacon
-                <input id="chkIngredient4" type="checkbox" value="4" name="ingredients" /> Atún
+                <input id="chkIngredient4" type="checkbox" value="4" name="ingredients" /> Peperoni
                 <label for="inputPrice">Precio</label>
                 <input id="inputPrice" type="text" name="inputPrice"/>
                 <label for="urlImage">Url Imagen</label>

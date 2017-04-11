@@ -8,6 +8,7 @@ package es.cifpcm.pizzeriamvc.controller;
 import es.cifpcm.pizzeriamvc.controller.data.DatabaseConfig;
 import es.cifpcm.pizzeriamvc.model.OfertaPizzas;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,12 +17,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +29,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author omarl
  */
-public class PizzaSelectorServlet extends HttpServlet {
+@WebServlet(name = "InsertPizzasServlet", urlPatterns = {"/insertPizzas"})
+public class InsertPizzasServlet extends HttpServlet {
 
     private final DatabaseConfig dbCfg = new DatabaseConfig();
     private final static Logger LOG = LoggerFactory.getLogger(AuthControllerServlet.class);
@@ -50,34 +51,23 @@ public class PizzaSelectorServlet extends HttpServlet {
         }
     }
 
-    private List<OfertaPizzas> getListPizzas() {
-        List<OfertaPizzas> listPizzas = new ArrayList<>();
-        final String query = "SELECT  idOfertas, nombre, precioTotal,  urlImagen  FROM Ofertas";
-        try (Connection conn = DriverManager.getConnection(dbCfg.getDatabaseUrl(),
-                dbCfg.getDatabaseUser(), dbCfg.getDatabasePassword());
-                PreparedStatement pstmt = conn.prepareStatement(query)) {
-            try (ResultSet rs = pstmt.executeQuery(query)) {
-                while (rs.next()) {
-                    OfertaPizzas op = new OfertaPizzas();
-                    op.setIdOfertas(rs.getInt("idOfertas"));
-                    op.setNombre(rs.getString("nombre"));
-                    op.setPrecioTotal(Double.parseDouble(rs.getString("precioTotal")));
-                    op.setUrlImagen(rs.getString("urlImagen"));
 
-                    listPizzas.add(op);
-                }
-            }
-
-        } catch (SQLException ex) {
-            LOG.error("getListPizzas", ex);
-        }
-        return listPizzas;
-    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet InsertPizzasServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet InsertPizzasServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -92,11 +82,6 @@ public class PizzaSelectorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
 
     }
 
@@ -111,17 +96,14 @@ public class PizzaSelectorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<OfertaPizzas> listPizzas = getListPizzas();
-
-        ServletContext servletCtx = getServletContext();
-        if (listPizzas != null) {
-            request.setAttribute("listPizzas", listPizzas);
-            servletCtx.getRequestDispatcher("/customer/pizzas.jsp").forward(request, response);
-        } else {
-            servletCtx.getRequestDispatcher("/error.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

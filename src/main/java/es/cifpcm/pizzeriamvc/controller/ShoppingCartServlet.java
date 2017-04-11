@@ -10,7 +10,6 @@ import es.cifpcm.pizzeriamvc.model.OfertaOrder;
 import es.cifpcm.pizzeriamvc.model.ShoppingCart;
 import es.cifpcm.pizzeriamvc.model.UserPrincipal;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
