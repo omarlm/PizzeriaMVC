@@ -26,7 +26,7 @@
         <div class="register">
             <form action="insertPizzas" method="post">
                 <label for="inputName">Nombre</label>
-                <input type="text" id="inputName" name="pizzaName" required="required" />
+                <input type="text" id="inputName" name="namePizza" required="required" />
                 <label for="selBase">Tipo de base</label>
                 <select id="selBase" name="selBase">
                     <option value="EXTRAQ">Extra Queso</option>

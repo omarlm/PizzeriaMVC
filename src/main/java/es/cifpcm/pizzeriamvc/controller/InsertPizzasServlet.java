@@ -8,15 +8,13 @@ package es.cifpcm.pizzeriamvc.controller;
 import es.cifpcm.pizzeriamvc.controller.data.DatabaseConfig;
 import es.cifpcm.pizzeriamvc.model.OfertaPizzas;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,23 +49,43 @@ public class InsertPizzasServlet extends HttpServlet {
         }
     }
 
-
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InsertPizzasServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InsertPizzasServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    }
+
+    private OfertaPizzas insertPizzas(String strInsertOferm, String strDescripcion, Double dPrecioTotal, String strUrlImagen) {
+        final String query = "INSERT INTO Ofertas (nombre, descripcion, precioTotal, urlImagen) VALUES (?,?,?,?)";
+        OfertaPizzas ofer = null;
+        try (Connection conn = DriverManager.getConnection(dbCfg.getDatabaseUrl(),
+                dbCfg.getDatabaseUser(), dbCfg.getDatabasePassword());
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, strInsertOferm);
+            pstmt.setString(2, strDescripcion);
+            pstmt.setDouble(3, dPrecioTotal);
+            pstmt.setString(4, strUrlImagen);
+            int rowInserted = pstmt.executeUpdate();
+            if (rowInserted > 0) {
+                LOG.debug("Ofer Inserted!!!");
+
+            }
+            //int resul = pstmt.executeUpdate();
+            //if (resul > 0) {
+            //    try (ResultSet rs = pstmt.getGeneratedKeys()) {
+            //        while (rs.next()) {
+            //            LOG.debug("Introduciendo datos en la BD {}", strInsertOferm, strDescripcion, dPrecioTotal, strUrlImagen);
+            //            ofer = new OfertaPizzas();
+            //            ofer.setNombre(rs.getString("nombre"));
+            //            ofer.setDescripcion(rs.getString("descripcion"));
+            //            ofer.setPrecioTotal(Double.parseDouble(rs.getString("precioTotal")));
+            //            ofer.setUrlImagen(rs.getString("UrlImagen"));
+            //        }
+            //    }
+            //}
+
+        } catch (SQLException ex) {
+            LOG.error("insertPizzas", ex);
         }
+        return ofer;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -96,7 +114,17 @@ public class InsertPizzasServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        OfertaPizzas ofer = insertPizzas(request.getParameter("namePizza"),
+                request.getParameter("selBase"),
+                Double.parseDouble(request.getParameter("inputPrice")),
+                request.getParameter("urlImage"));
+
+        LOG.debug("Oferta encontrada {}", ofer != null);
+
+        ServletContext servletCtx = getServletContext();
+
+        servletCtx.getRequestDispatcher("/insertSucess.jsp").forward(request, response);
+
     }
 
     /**
