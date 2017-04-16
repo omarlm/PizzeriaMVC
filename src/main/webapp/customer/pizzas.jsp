@@ -12,34 +12,35 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://icono-49d6.kxcdn.com/icono.min.css">
-        <link rel="stylesheet" href="./css/style.css">
-        <title>Lista - Inicio</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans" >
+        <link rel="stylesheet" href="css/style.css">
+        <title>Pizzeria - Lista</title>
     </head>
     <body>
-        <nav id="main-menu">
-            <ul class="nav-bar">
-                <li><a href="${pageContext.request.contextPath}/loginSucess.jsp"><i class="icono-home"></i>Home</a></li>
-                <li><a href=""><i class="icono-cross"></i>Log out</a></li>
-                <!--<li><a href="${pageContext.request.contextPath}/insertOfer.jsp"><i class="icono-plusCircle"></i>Insert Orfer</a></li>-->
-                <li style="text-align: right"><i class="icono-user"></i><c:out value="${PRINCIPAL.login}" /></li>
-                <li><i class="icono-cart"></i> <c:out value="${SHOPPING_CART.items}" /></li>
-            </ul>
-        </nav>
-        <div class="container">
-            <h1 class="title">Las Destacas</h1>
+        <header>
+            <div class="container">
+                <img src="${pageContext.request.contextPath}/images/pizza.png" alt="logo" class="logo"/>
+                <nav>
+                    <ul>
+                        <li><a href="${pageContext.request.contextPath}/loginSucess.jsp">Home</a></li>
+                        <li><a href="">Log out</a></li>
+                        <li><a href="${pageContext.request.contextPath}/insertOfer.jsp">Insert Orfer</a></li>
+                        <li><c:out value="${PRINCIPAL.login}" /></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="container-list">
+            <h1>Las Destacas</h1>
             <c:forEach var="item" items="${listPizzas}">
-                <div class="wrap">
-                    <h1>Oferta: ${item.nombre}</h1>
+                <div class="container-pizzas">
+                    <h2>Oferta: ${item.nombre}</h2>
                     <p>Precio: ${item.precioTotal}€</p>
                     <p><img src="${item.urlImagen}" /></p>
                     <p>Cantidad: <input type="number"></p>
-                    <div id="login">
-                        <div class="form">
-                            <form action="shoppingCart" method="post">
-                                <input value="${item.idOfertas}" name="idPedido" type="submit"/>
-                            </form>
-                        </div>
-                    </div>
+                    <form action="shoppingCart" method="post">
+                        <input value="${item.idOfertas}" name="idPedido" type="submit"/>
+                    </form>
                 </div>
             </c:forEach>
         </div>

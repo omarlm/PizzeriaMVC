@@ -11,38 +11,49 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://icono-49d6.kxcdn.com/icono.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans" >
         <link rel="stylesheet" href="css/style.css">
         <title>Pizzeria - Insertar Oferta</title>
     </head>
     <body>
-        <nav id="main-menu">
-            <ul class="nav-bar">
-                <li><a href="${pageContext.request.contextPath}/loginSucess.jsp"><i class="icono-home"></i>Home</a></li>
-                <li><a href=""><i class="icono-cross"></i>Log out</a></li>
-                <li><a href="${pageContext.request.contextPath}/insertOfer.jsp"><i class="icono-plusCircle"></i>Insert Orfer</a></li>
-                <li style="text-align: right">Username: <c:out value="${PRINCIPAL.login}" /></li>
-            </ul>
-        </nav>
-        <div class="register">
+        <header>
+            <div class="container">
+                <img src="${pageContext.request.contextPath}/images/pizza.png" alt="logo" class="logo"/>
+                <nav>
+                    <ul>
+                        <li><a href="${pageContext.request.contextPath}/loginSucess.jsp">Home</a></li>
+                        <li><a href="">Log out</a></li>
+                        <li><a href="${pageContext.request.contextPath}/insertOfer.jsp">Insert Orfer</a></li>
+                        <li><c:out value="${PRINCIPAL.login}" /></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="container-register">
+            <h1>Registro de oferta</h1>
             <form action="insertPizzas" method="post">
-                <label for="inputName">Nombre</label>
-                <input type="text" id="inputName" name="namePizza" required="required" />
-                <label for="selBase">Tipo de base</label>
-                <select id="selBase" name="selBase">
-                    <option value="EXTRAQ">Extra Queso</option>
-                    <option value="3PISOS">3 pisos</option>
-                    <option value="EXTRAC">Extra Carne</option>
-                </select>
-                <br />
-                <label>Ingredientes</label>
-                <input id="chkIngredient1" type="checkbox" value="1" name="ingredients"/> Mozzarella
-                <input id="chkIngredient2" type="checkbox" value="2" name="ingredients"/> Champiñones
-                <input id="chkIngredient3" type="checkbox" value="3" name="ingredients"/> Bacon
-                <input id="chkIngredient4" type="checkbox" value="4" name="ingredients" /> Peperoni
-                <label for="inputPrice">Precio</label>
-                <input id="inputPrice" type="text" name="inputPrice"/>
-                <label for="urlImage">Url Imagen</label>
-                <input id="urlImage" type="url" name="urlImage" />
+                <label for="inputName">Nombre:
+                    <input type="text" id="inputName" name="namePizza" required="required" />
+                </label>
+                <label for="selBase">Tipo de base:
+                    <select id="selBase" name="selBase">
+                        <option value="EXTRAQ">Extra Queso</option>
+                        <option value="3PISOS">3 pisos</option>
+                        <option value="EXTRAC">Extra Carne</option>
+                    </select>
+                </label>
+                <label>Ingredientes:
+                    <input id="chkIngredient1" type="checkbox" value="1" name="ingredients"/> Mozzarella
+                    <input id="chkIngredient2" type="checkbox" value="2" name="ingredients"/> Champiñones
+                    <input id="chkIngredient3" type="checkbox" value="3" name="ingredients"/> Bacon
+                    <input id="chkIngredient4" type="checkbox" value="4" name="ingredients" /> Peperoni
+                </label>
+                <label for="inputPrice">Precio:
+                    <input id="inputPrice" type="text" name="inputPrice"/>
+                </label>
+                <label for="urlImage">Url Imagen:
+                    <input id="urlImage" type="url" name="urlImage" />
+                </label>
                 <input type="submit" value="Create" />
             </form>
         </div>

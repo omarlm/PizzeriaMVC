@@ -14,14 +14,19 @@
         <title>Pizzeria - Insertar Oferta</title>
     </head>
     <body>
-        <nav id="main-menu">
-            <ul class="nav-bar">
-                <li><a href="${pageContext.request.contextPath}/loginSucess.jsp"><i class="icono-home"></i>Home</a></li>
-                <li><a href=""><i class="icono-cross"></i>Log out</a></li>
-                <li><a href="${pageContext.request.contextPath}/insertOfer.jsp"><i class="icono-plusCircle"></i>Insert Orfer</a></li>
-                <li style="text-align: right">Username: <c:out value="${PRINCIPAL.login}" /></li>
-            </ul>
-        </nav>
+        <header>
+            <div class="container">
+                <img src="${pageContext.request.contextPath}/images/pizza.png" alt="logo" class="logo"/>
+                <nav>
+                    <ul>
+                        <li><a href="${pageContext.request.contextPath}/loginSucess.jsp">Home</a></li>
+                        <li><a href="">Log out</a></li>
+                        <li><a href="${pageContext.request.contextPath}/insertOfer.jsp">Insert Orfer</a></li>
+                        <li><c:out value="${PRINCIPAL.login}" /></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
     <body>
         <div class="register">
             <h1>Ofer inserted</h1>

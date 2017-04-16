@@ -7,176 +7,198 @@ and open the template in the editor.
     Created on : 04-abr-2017, 17:36:23
     Author     : omarl
 */
-@charset "utf-8";
 
-
-@import url(http://weloveiconfonts.com/api/?family=fontawesome);
-@import url(http://meyerweb.com/eric/tools/css/reset/reset.css);
-
-[class*="fontawesome-"]:before {
-    font-family: 'FontAwesome', sans-serif;
-}
-.title{
-    color: #000;
-    font-size: 180%;
-    margin: 1%;
-    font-variant: small-caps;
-}
-
-body {
-    background: #393937;
-    font: 87.5%/1.5em sans-serif;
-    color: #FFF;
-}
-
-input {
-    font-size: inherit;
+body{
     margin: 0;
-    padding: 0;
-    /*-webkit-appearance: none;*/
+    background: #FAFAFA;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
 }
 
 .container{
-    width: 44%;
-    margin: 2% auto;
-    background-color: #FFF;
-    border:1px solid rgba(0,0,0,0.7);
-    border-radius:6px;
+    width: 80%;
+    margin: 0 auto;
 }
 
-.wrap
-{
-    position:relative;
-    /*height:250px;*/
-    width:35%;
-    background:#ccc;
-    border:1px solid rgba(0,0,0,0.7);
-    box-shadow:0px -1px 3px rgba(0,0,0,0.1),
-        0px 2px 6px rgba(0,0,0,0.5);
-    border-radius:6px;
-    margin:2% auto;
-    padding: 2%;
-    overflow:hidden;
-    z-index:100;
-    color: #000;
+header{
+    background-color: #BF1010;
 }
 
-/* ---------- LOGIN ---------- */
-
-#login {
-    margin: 50px auto;
-    width: 242px;
+header::after{
+    content: '';
+    display: table;
+    clear: both;
 }
 
-#login span {
-    color: #676767;
-    display: block;
-    height: 48px;
-    line-height: 48px;
-    position: absolute;
-    text-align: center;
-    width: 36px;
+.logo{
+    width: 20%;
+    float: left;
+    padding: 10px 0;
 }
 
-#login input {
-    border: none;
-    height: 48px;
-    outline: none;
+nav{
+    float: right;
 }
 
-#login input[type="text"] {
-    background: #dedede;
-    border-top: 1px solid #000;
-    border-right: 1px solid #000;
-    border-left: 1px solid #000;
-    border-radius: 5px 5px 0 0;
-    color: #363636;
-    padding-left: 36px;
-    width: 204px;
+nav ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-#login input[type="password"] {
-    background-color: #dedede;
-    border-top: 1px solid #828282;
-    border-right: 1px solid #000;
-    border-bottom: 1px solid #000;
-    border-left: 1px solid #000;
-    border-radius: 0 0 5px 5px;
-    color: #363636;
-    margin-bottom: 20px;
-    padding-left: 36px;
-    width: 204px;
-}
-
-#login input[type="submit"] {
-    background: #e14d4d;
-    border: 1px solid #391515;
-    border-radius: 5px;
-    color: #fff;
-    font-weight: bold;
-    line-height: 48px;
-    text-align: center;
-    text-transform: uppercase;
-    width: 240px;
-}
-
-#login input[type="submit"]:hover {
-    background: #f15958;
-}
-
-/*HEADER*/
-
-
-#main-menu .nav-bar { list-style:none; margin-top: 40px;     border-bottom: 2px solid #FFF;
-}
-#main-menu .nav-bar li { display:inline; padding:0 10px; }
-
-#main-menu .nav-bar li a {
-    text-decoration: none;
-    padding-left: 25px;
-    text-transform: uppercase;
-    color: #FFF;
-    text-shadow: 1px 1px 1px #ccc;
-}
-
-/*REGISTRO PIZZAS*/
-
-
-.register{
-    border: 2px solid red;
-    border-radius: 5px;
-    width: 25%;
-    margin: auto;
-    margin-top: 2%;
-    padding: 2%;
-    background-color: #CCC;
-    color:#000;
-}
-
-
-.register label{
-    display: block;
-}
-
-.register input[type="text"],input[type="url"], select{
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+nav li{
     display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+    margin-left: 70px;
+    padding-top: 23px;
+
+    position: relative;
 }
 
-.register input[type="submit"]{
-    background: #e14d4d;
-    border: 1px solid #391515;
-    border-radius: 5px;
-    margin-top: 1%;
-    color: #fff;
-    font-weight: bold;
-    line-height: 48px;
-    text-align: center;
+nav a{
+    color: #444;
+    text-decoration: none;
     text-transform: uppercase;
-    width: 100%;
+    font-size: 14px;
 }
+
+nav a:hover{
+    color: #000;
+
+}
+
+nav a::before{
+    content: '';
+    display: block;
+    height: 5px;
+    width: 100%;
+    background-color: #444;
+
+    position: absolute;
+    top: 0;
+    width: 0%;
+
+    transition: all ease-in-out 250ms; 
+}
+
+nav a:hover::before{
+    width: 0%;
+}
+
+/*FORM*/
+
+.login-form{
+    background-color: #ccc;
+    width: 15%;
+    height: 350px;
+    margin: auto;
+    margin-top: 5%;
+
+    position: relative;
+
+    box-shadow: 5px 5px 2px #888888;
+}
+
+.login-form h2{
+    background-color: #D5222C;
+    text-align: center;
+    height: 50px;
+    padding: 2%;
+    color: #FFF;
+}
+
+.login-form input, label{
+    margin: 0 auto;
+    margin-top: 2%;
+    display: block;
+    width: 80%;
+    height: 30px;
+}
+
+.login-form input[type="submit"]{
+    width: 80%;
+    height: 50px;
+    margin-top: 10%;
+    background-color: #FA5858;
+    color: #FFF;
+    font-size: 32px;
+    font-family: 'Work Sans', sans-serif;
+    cursor: pointer;
+
+}
+
+.login-form input[type="submit"]:hover{
+    background-color: #FE2E2E;
+}
+
+/*FORM PIZZAS*/
+
+.search-form, .container-list{
+    margin: auto;
+    width: 15%;
+    height: 50px;
+    position: relative;
+    top: 20px;
+}
+
+.search-form input[type="submit"], .container-pizzas input[type="submit"], .container-register input[type="submit"]{
+    width: 100%;
+    height: 50px;
+    background-color: #FA5858;
+    color: #FFF;
+    font-size: 32px;
+    font-family: 'Work Sans', sans-serif;
+    cursor: pointer;
+}
+
+.login-form input[type="submit"]:hover, .container-pizzas input[type="submit"]:hover, .container-register input[type="submit"]:hover{
+    background-color: #FE2E2E;
+}
+
+/*LIST PIZZAS*/
+
+.container-list{
+    border-bottom: 2px solid black;
+    width: 20%;
+}
+
+.container-pizzas{
+    border: 2px solid #000;
+    border-radius: 5px 5px 0 0;
+    margin: 2%;
+    background-color: #FFF;
+}
+
+.container-pizzas h2{
+    background-color: #D5222C;
+    text-align: center;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.container-pizzas p{
+    color: #BF1010;
+    font-weight: bold;
+}
+
+/*INSERT PIZZAS*/
+
+.container-register{
+    border: 2px solid black;
+    margin: 0 auto;
+    margin-top: 5%;
+    width: 50%;
+}
+
+.container-register h1{
+    background-color: #D5222C;
+    text-align: center;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.container-register label{
+    display: block;
+    left: auto;
+    border-bottom: 2px solid #000;
+}
+
