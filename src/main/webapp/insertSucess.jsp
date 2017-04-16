@@ -20,9 +20,10 @@
                 <nav>
                     <ul>
                         <li><a href="${pageContext.request.contextPath}/loginSucess.jsp">Home</a></li>
-                        <li><a href="">Log out</a></li>
                         <li><a href="${pageContext.request.contextPath}/insertOfer.jsp">Insert Orfer</a></li>
+                        <li><a href="">Log out</a></li>
                         <li><c:out value="${PRINCIPAL.login}" /></li>
+                        <li><i class="icono-cart"></i> <c:out value="${SHOPPING_CART.items}" /></li>
                     </ul>
                 </nav>
             </div>
